@@ -3,7 +3,7 @@ const app=express();
 const fs=require("fs");
 const bodyParser=require("body-parser");
 const converter=require("json-2-csv");
-const filename="node.csv";
+const filename="data.csv";
 app.use(bodyParser.urlencoded({extended:false}));
 app.set("views","./views");
 app.set("view engine","ejs");
@@ -19,7 +19,7 @@ app.post("/saveData",(req,res)=>{
                 value.push(req.body[item])
             }
             let strValue=value.join(",")
-            fs.appendFile(filename,strValue,(err)=>{
+            fs.appendFile(filename,"\r\n"+strValue,(err)=>{
                 if (err) throw err
             })
             }
@@ -27,8 +27,8 @@ app.post("/saveData",(req,res)=>{
             fs.writeFile(filename,csv,(err)=>{
                 if (err) throw err
             })
-            res.send("successful!");
         };
+        res.send("successful!");
     
     });
    
